@@ -69,9 +69,11 @@ class Index extends Controller
         $ObjWriter=PHPExcel_IOFactory::createWriter($PHPExcelObj,'Excel2007');
         $ObjWriter->save('/public/upload/tjb.xlsx');
 
-        $this->success('提交成功','index');
+        $this->success('提交成功，无需重复提交','_404');
     }
 
-
+    public function _404(){
+        return view();
+}
 
 }

@@ -4,17 +4,35 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>填写信息</title>
     <link type="text/css" href="__CSS__/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            /*text-align: center;*/
+            background: url("__STATIC__/images/1.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+        }
+        h1{text-align: center;}
+    </style>
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <script language="JavaScript" src="__JS__/bootstrap.min.js"></script>
     <script language="JavaScript" src="__JS__/jquery-3.3.1.min.js"></script>
     <script language="JavaScript">
         function check_null() {
             var p=true;
+            if(!confirm("确定填写的信息无误吗？提交后将不可更改！")){
+                p= false;
+            }
             $("form .form-group").each(function () {
                 //判断输入是否为空
                 if($(this).children('span').text()!=""){
                     p=false;
                     $(this).children("input").focus();
-                    //return false;
                 }
             })
             return p;
@@ -43,6 +61,7 @@
     </script>
 </head>
 <body>
+    <h1>信息填写</h1>
     <div class="container">
         <div class="center-block">
             <form method="post" action="save_to_excel" name="form1" onsubmit="return check_null()">
