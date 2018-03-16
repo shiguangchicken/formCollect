@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>信息统计管理界面</title>
+    <link type="text/css" href="__CSS__/bootstrap.min.css" rel="stylesheet">
+    <script language="JavaScript" src="__JS__/bootstrap.min.js"></script>
+    <style>.container{margin-top: 50px;}.row{margin-bottom: 20px;} .text{color: red;}</style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"><a href="admin_up" class="btn btn-default" >上传excel文件</a></div>
+        <div class="col-md-2"><a href="download_excel"  class="btn btn-primary">下载excel文件</a></div>
+        <div class="col-md-2"><a href="clear_txt"  class="btn btn-default">清除原始工作表</a></div>
+    </div>
+    <h4>当前表格中的数据如下</h4>
+    <table class="table">
+        <!-- On rows -->
+        {volist name="data" id="vo" key="k"}
+        <tr class="{$color[$k%5]}">
+            {volist name="vo" id="cell"}
+            <td class="">{$cell}</td>
+            {/volist}
+        </tr>
+        {/volist}
+    </table>
+
+</div>
+
+
+</body>
+</html>
