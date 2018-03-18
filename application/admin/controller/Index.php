@@ -10,20 +10,28 @@ namespace app\admin\controller;
 use PHPExcel_IOFactory;
 use PHPExcel;
 use think\Controller;
+use think\Db;
 
 class Index extends Controller
 {
     public function index()
     {
-        if(file_exists('/public/upload/tjb.xlsx')){
-            $body=$this->read_excelinfo('/public/upload/tjb.xlsx');
-            $table_color=['active','success','warning','danger','info'];
-            //dump($body);
-            return view('index',['data'=>$body,'color'=>$table_color]);
+        if (empty($_COOKIE['user'])){
+            $this->redirect('login');
         }else{
-            return view('admin_up',['mesg'=>"当前没有人提交信息"]);
+            if ($_COOKIE['user']=='管理员'){
+                if(file_exists('/public/upload/tjb.xlsx')){
+                    $body=$this->read_excelinfo('/public/upload/tjb.xlsx');
+                    $table_color=['active','success','warning','danger','info'];
+                    //dump($body);
+                    return view('index',['data'=>$body,'color'=>$table_color]);
+                }else{
+                    return view('admin_up',['mesg'=>"当前没有人提交信息"]);
+                }
+            }else{
+                $this->redirect('login');
+            }
         }
-
     }
 
     //读取excel表格
@@ -93,5 +101,23 @@ class Index extends Controller
         }
         $this->redirect('index');
     }
+    public function login(){
+        return view();
+    }
+    public function check_login(){
+        $u=input('username');
+        $p=input('password');
+        $res_DB=Db::table('form_admin')->where('username','=',$u)->select();
+        if ($res_DB==null){
+            $this->error('登录失败','login');
+        }else{
+            if ($p==$res_DB[0]['password']){
+                setcookie('user','管理员');
+                $this->redirect('index');
+            }else{
+                $this->error('登录失败','login');
+            }
+        }
 
+    }
 }
